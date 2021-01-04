@@ -40,6 +40,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
       - name: Rubocop
-        run: bundle exec rubocop --parallel
+        run: bundle exec rubocop --parallel --fail-level W --display-only-fail
       - name: RSpec
         run: bundle exec rspec
