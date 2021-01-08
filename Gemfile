@@ -31,6 +31,7 @@ gem "active_model_serializers", "~> 0.10.0" # 追加
 gem "bootsnap", ">= 1.4.2", require: false
 gem "devise_token_auth" # 追加
 
+
 group :development, :test do
   gem "factory_bot_rails" # 追加
   gem "faker" # 追加
@@ -50,6 +51,7 @@ group :development do
   gem "annotate" # 追加
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+  gem "rails-erd"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
