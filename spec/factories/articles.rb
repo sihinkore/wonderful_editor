@@ -19,8 +19,8 @@
 #
 FactoryBot.define do
   factory :article do
-    title { "" }
+    title { "FactoryBotの使い方" }
     body { "MyText" }
-    user { nil }
+    user
   end
 end
