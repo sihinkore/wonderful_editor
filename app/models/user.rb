@@ -41,4 +41,8 @@ class User < ActiveRecord::Base
   has_many :articles
   has_many :comments
   has_many :article_likes
+
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :password, presence: true
 end
