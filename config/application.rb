@@ -42,5 +42,6 @@ module WonderfulEditor
                        request_specs: true
     end
     config.api_only = true
+    config.middleware.use ActionDispatch::Flash
   end
 end
