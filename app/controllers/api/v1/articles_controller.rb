@@ -10,11 +10,26 @@ class Api::V1::ArticlesController < Api::V1::BaseApiController
   end
 
   def create
-     # 記事のタイトルと本文が作られる。このとき誰が作った事になる？
+     # ログインユーザーと紐付いた記事が作成できる。
     article = current_user.articles.create!(article_params)
 
     # jsonとして値を返す
     render json: article  #each_serializer: Api::V1::ArticleSerializerはいらない？
+  end
+
+  def update
+    article = current_user.articles.find(params[:id])
+    article.update!(article_params)
+
+     # jsonとして値を返す
+    render json: article
+  end
+
+  def destroy
+    article = current_user.articles.find(params[:id])
+    article.destroy!
+
+    render json: article
   end
 
   private

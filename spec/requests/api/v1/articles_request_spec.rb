@@ -47,4 +47,36 @@ RSpec.describe "Api::V1::Articles", type: :request do
     end
    end
   end
+  describe "PATCH/api/v1/articles:id" do
+   subject{patch(api_v1_article_path(article_id),params:params)}
+
+   context "適切なパラメーターが送られたとき" do
+     let!(:article){create(:article)}
+     let(:article_id){article.id}
+     let(:current_user){article.user}
+     let(:params){{article:{title:"update_title",body:"update_body"}}}
+     before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+    #  let(:params){{attributes_for(:article)}}
+     it "記事が上書きされる" do
+       expect{subject}.to change {Article.find(article_id).title}.from(article.title).to("update_title") &
+                            not_change {Article.find(article_id).id} &
+                            not_change {Article.find(article_id).user.id} &
+                            not_change {Article.find(article_id).user.name}
+
+     end
+   end
+  end
+  describe "DELETE/api/v1/articles:id" do
+    subject{delete(api_v1_article_path(article_id))}
+
+    context "適切なパラメーターが送られたとき" do
+      let(:current_user){article.user}
+      let!(:article){create(:article)}
+      let(:article_id){article.id}
+      # before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+      fit "記事が削除される" do
+        expect{subject}.to change {Article.count}.by(-1)
+      end
+    end
+  end
 end
