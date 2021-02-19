@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   has_many :article_likes
 
   validates :name, presence: true
-  validates :email, presence: true
-  validates :password, presence: true
+  # email passwordのvalidationについては、devise_token_authのデフォルトのものを使う
+  # validates :email, presence: true
+  # validates :password, presence: true
 end
