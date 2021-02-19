@@ -74,7 +74,7 @@ RSpec.describe "Api::V1::Articles", type: :request do
       let!(:article){create(:article)}
       let(:article_id){article.id}
       # before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
-      fit "記事が削除される" do
+      it "記事が削除される" do
         expect{subject}.to change {Article.count}.by(-1)
       end
     end
