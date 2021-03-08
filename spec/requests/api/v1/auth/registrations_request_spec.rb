@@ -5,7 +5,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
     subject{post(api_v1_user_registration_path,params:params)}
     context "name,email,passwordが送られたとき" do
     let(:params){attributes_for(:user)}
-    fit "ユーザーが登録される" do
+    it "ユーザーが登録される" do
       subject
       res = JSON.parse(response.body)
       expect(res.values[0]).to eq "success"

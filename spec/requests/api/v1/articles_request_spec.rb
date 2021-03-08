@@ -32,13 +32,12 @@ RSpec.describe "Api::V1::Articles", type: :request do
     end
   end
   describe "POST/api/v1/articles" do
-    subject{post(api_v1_articles_path,params:params)}
+    subject{post(api_v1_articles_path,params:params,headers:headers)}
   context "ユーザーがログインしているとき" do
-    # let!(:user){create(:user)}
-    # let(:current_user){User.first}
     let(:current_user){create(:user)}
     let(:params){{article:attributes_for(:article)}}
-    before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+    # before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+    let(:headers){current_user.create_new_auth_token }
   it "記事が作られる" do
     expect{subject}.to change {Article.count}.by(1)
     res = JSON.parse(response.body)
@@ -48,14 +47,15 @@ RSpec.describe "Api::V1::Articles", type: :request do
    end
   end
   describe "PATCH/api/v1/articles:id" do
-   subject{patch(api_v1_article_path(article_id),params:params)}
+   subject{patch(api_v1_article_path(article_id),params:params,headers:headers)}
 
    context "適切なパラメーターが送られたとき" do
      let!(:article){create(:article)}
      let(:article_id){article.id}
      let(:current_user){article.user}
      let(:params){{article:{title:"update_title",body:"update_body"}}}
-     before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+    #  before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+     let(:headers){current_user.create_new_auth_token }
     #  let(:params){{attributes_for(:article)}}
      it "記事が上書きされる" do
        expect{subject}.to change {Article.find(article_id).title}.from(article.title).to("update_title") &
@@ -67,13 +67,14 @@ RSpec.describe "Api::V1::Articles", type: :request do
    end
   end
   describe "DELETE/api/v1/articles:id" do
-    subject{delete(api_v1_article_path(article_id))}
+    subject{delete(api_v1_article_path(article_id),headers:headers)}
 
     context "適切なパラメーターが送られたとき" do
       let(:current_user){article.user}
       let!(:article){create(:article)}
       let(:article_id){article.id}
       # before{allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user)}
+      let(:headers){current_user.create_new_auth_token }
       it "記事が削除される" do
         expect{subject}.to change {Article.count}.by(-1)
       end

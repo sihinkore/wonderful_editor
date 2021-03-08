@@ -35,7 +35,6 @@ RSpec.describe User, type: :model do
     let(:user){build(:user)}
     it "ユーザー登録ができる" do
     expect(user).to be_valid
-    binding.pry
     end
   end
   context "nameを入力していないとき" do
