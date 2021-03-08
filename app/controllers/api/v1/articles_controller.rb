@@ -12,7 +12,6 @@ class Api::V1::ArticlesController < Api::V1::BaseApiController
   def create
      # ログインユーザーと紐付いた記事が作成できる。
     article = current_user.articles.create!(article_params)
-
     # jsonとして値を返す
     render json: article  #each_serializer: Api::V1::ArticleSerializerはいらない？
   end
