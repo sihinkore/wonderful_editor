@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  body       :text
+#  status     :string           default("draft"), not null
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -21,8 +22,15 @@ require 'rails_helper'
 
 RSpec.describe Article, type: :model do
   context "タイトルと本文が入力されたとき" do
-    let(:article){build(:article)}
-    it "記事が作成される" do
+    let(:article){build(:article, :published)}
+    it "公開記事が作成される" do
+    expect(article).to be_valid
+    end
+  end
+
+  context "タイトルと本文が入力されたとき" do
+    let(:article){build(:article, :draft)}
+    it "下書き記事が作成される" do
     expect(article).to be_valid
     end
   end
