@@ -1,7 +1,5 @@
 class Api::V1::BaseApiController < ApplicationController
   # include DeviseTokenAuth::Concerns::SetUserByToken
-  before_action :authenticate_user!, except:
-  [:index, :show]
   #ダミーメソッドだったので削除
   # def current_user
   #   @current_user ||= User.first
