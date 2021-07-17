@@ -45,7 +45,7 @@ RSpec.describe "Api::V1::Articles", type: :request do
     let(:headers){current_user.create_new_auth_token }
   context "公開記事の作成を指定したとき" do
     let(:params){{article:attributes_for(:article, :published)}}
-   it "公開記事が作られる" do
+    it "公開記事が作られる" do
     expect{subject}.to change {Article.published.count}.by(1)
     res = JSON.parse(response.body)
     expect(res.keys[1]).to eq "title"
